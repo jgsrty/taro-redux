@@ -1,27 +1,48 @@
 import Taro, { Component } from '@tarojs/taro'
-import { View, Text } from '@tarojs/components'
+import { View, Text, Button } from '@tarojs/components'
+import { connect } from '@tarojs/redux'
 import './index.scss'
 
-export default class Index extends Component {
+import { add, minus, asyncAdd } from '../../actions/counter'
 
+@connect(
+  ({ counter }) => ({
+    counter
+  }),
+  dispatch => ({
+    add() {
+      dispatch(add())
+    },
+    dec() {
+      dispatch(minus())
+    },
+    asyncAdd() {
+      dispatch(asyncAdd())
+    }
+  })
+)
+export default class Index extends Component {
   config = {
     navigationBarTitleText: '首页'
   }
 
-  componentWillMount () { }
+  componentWillMount() {}
 
-  componentDidMount () { }
+  componentDidMount() {}
 
-  componentWillUnmount () { }
+  componentWillUnmount() {}
 
-  componentDidShow () { }
+  componentDidShow() {}
 
-  componentDidHide () { }
+  componentDidHide() {}
 
-  render () {
+  render() {
     return (
       <View className='index'>
-        <Text>Hello world!</Text>
+        <Button onClick={this.props.add}>add</Button>
+        <Button onClick={this.props.dec}>minus</Button>
+        <Button onClick={this.props.asyncAdd}>async</Button>
+        <Text>{this.props.counter.num}</Text>
       </View>
     )
   }
